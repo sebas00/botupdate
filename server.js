@@ -4,7 +4,7 @@ const express = require('express');
 const http = require('http');
 //const SocketServer = require('ws').Server;
 const path = require('path');
-
+var configobject = { color : 'red'};
 const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'index.html');
 const expressWs = require('express-ws')
@@ -23,13 +23,16 @@ expressWs(app, server);
 app.ws('/', (ws, req) => {
   ws.send('hi');
   setInterval(() => {
-    ws.send(new Date().toTimeString());
+    ws.send(configobject.color);
   }, 1000);
 
 ws.on('connection', (ws) => {
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
 });})
+
+app.get('/what', (req, res) => {configobject.color = 'blue' ;
+res.json({color : 'blue'});})
 
 app.use((req, res) => res.sendFile(INDEX) )
 server.listen(PORT, () => console.log(`Listening on ${ PORT }`));

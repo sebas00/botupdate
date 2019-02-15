@@ -1,8 +1,8 @@
 {
-  "name": "websockets-vanilla",
+  "name": "botupdate-websockets",
   "version": "1.0.0",
   "engines": {
-    "node": "6.2.0"
+    "node": "11.9.0"
   },
   "description": "",
   "main": "index.js",
@@ -13,9 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bufferutil": "1.2.1",
     "express": "^4.16.4",
-    "express-ws": "^4.0.0",
-    "utf-8-validate": "1.2.1"
+    "express-ws": "^4.0.0"
   }
 }
