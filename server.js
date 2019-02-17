@@ -36,7 +36,7 @@ ws.on('connection', (ws) => {
 app.get('/blue', (req, res) => {configobject.color = 'blue' ;
 res.json({color : 'blue'});})
 
-pp.get('/red', (req, res) => {configobject.color = 'red' ;
+app.get('/red', (req, res) => {configobject.color = 'red' ;
 res.json({color : 'red'});})
 
 
