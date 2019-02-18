@@ -23,10 +23,17 @@ expressWs(app, server);
 app.ws('/', (ws, req) => {
   ws.send('hi');
   ws.on('close', () => {return;})
-  setInterval(() => {
+  try {
+    setInterval(() => {
     
-    ws.send(configobject.color);
-  }, 1000);
+      ws.send(configobject.color);
+    }, 1000);
+
+  }
+  catch(err) {
+    console.log('socket closed');
+  }
+  
 
 ws.on('connection', (ws) => {
   console.log('Client connected');
