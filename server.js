@@ -33,6 +33,7 @@ app.ws('/', (ws, req) => {
       ws.send(configobject.color);
         }
  catch(err) {
+   clearInterval(id);
     console.log('socket closed');
   }
 
