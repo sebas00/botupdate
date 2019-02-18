@@ -22,14 +22,15 @@ expressWs(app, server);
 //const wss = new SocketServer({ server });
 app.ws('/', (ws, req) => {
   ws.send('hi');
-  ws.on('close', () => {return;})
+  //ws.on('close', () => {return;})
 
 
   
-    var id = setInterval(sendCObject(), 1000);
+    var id = setInterval(sendCObject, 1000);
     
       function sendCObject(){
         try{
+          console.log('send', configobject.color)
       ws.send(configobject.color);
         }
  catch(err) {
