@@ -23,16 +23,24 @@ expressWs(app, server);
 app.ws('/', (ws, req) => {
   ws.send('hi');
   ws.on('close', () => {return;})
-  try {
-    setInterval(() => {
-    
-      ws.send(configobject.color);
-    }, 1000);
 
-  }
-  catch(err) {
+
+  
+    var id = setInterval(sendCObject(), 1000);
+    
+      function sendCObject(){
+        try{
+      ws.send(configobject.color);
+        }
+ catch(err) {
     console.log('socket closed');
   }
+
+      }
+    
+
+  
+  
   
 
 ws.on('connection', (ws) => {
