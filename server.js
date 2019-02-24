@@ -12,7 +12,7 @@ const expressWs = require('express-ws')
 const app = express();
 const server = http.createServer(app);
 //const server = http.createServer(express);
-
+var wslink;
 expressWs(app, server);
 //const server = express()
   
@@ -23,13 +23,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //const wss = new SocketServer({ server });
 app.ws('/', (ws, req) => {
- 
+ wslink = ws;
   ws.send(JSON.stringify(configobject));
   //ws.on('close', () => {return;})
 
 
   
-    var id = setInterval(sendCObject, 1000);
+   // var id = setInterval(sendCObject, 10000);
     
       function sendCObject(){
         try{
@@ -58,7 +58,11 @@ res.json({color : req.body.color});})
 
 
 app.get('/blue', (req, res) => {configobject.color = 'blue' ;
-res.json({color : 'blue'});})
+wslink.send(JSON.stringify(configobject));
+res.json({color : 'blue'});
+
+
+})
 
 app.get('/red', (req, res) => {configobject.color = 'red' ;
 res.json({color : 'red'});})
