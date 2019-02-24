@@ -1,10 +1,11 @@
 'use strict';
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const http = require('http');
 //const SocketServer = require('ws').Server;
 const path = require('path');
-var configobject = { color : 'red'};
+var configobject = { status : 'notstarted', color : 'red', shape: 'circle'};
 const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'index.html');
 const expressWs = require('express-ws')
@@ -17,11 +18,13 @@ expressWs(app, server);
   
   
 
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //const wss = new SocketServer({ server });
 app.ws('/', (ws, req) => {
-  ws.send('hi');
+ 
+  ws.send(JSON.stringify(configobject));
   //ws.on('close', () => {return;})
 
 
@@ -30,8 +33,8 @@ app.ws('/', (ws, req) => {
     
       function sendCObject(){
         try{
-          console.log('send', configobject.color)
-      ws.send(configobject.color);
+          console.log('send', JSON.stringify(configobject))
+      ws.send(JSON.stringify(configobject));
         }
  catch(err) {
    clearInterval(id);
@@ -49,6 +52,10 @@ ws.on('connection', (ws) => {
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
 });})
+
+app.post('/config', (req, res) => {configobject = req.body ;
+res.json({color : req.body.color});})
+
 
 app.get('/blue', (req, res) => {configobject.color = 'blue' ;
 res.json({color : 'blue'});})
