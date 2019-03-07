@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const http = require('http');
 //const SocketServer = require('ws').Server;
 const path = require('path');
-var configobject = { status : 'notstarted', color : 'red', shape: 'circle', event : 'none'};
+var configobject = { status : 'notstarted', fill : 'white', shape: 'circle', background: 'white', event : 'none'};
 const PORT = process.env.PORT || 3000;
 const INDEX = path.join(__dirname, 'index.html');
 const expressWs = require('express-ws')
@@ -57,6 +57,15 @@ app.post('/start', (req, res) => {
   configobject = req.body ;
   configobject.status = 'start';
 configobject.event = 'start';
+  wslink.send(JSON.stringify(configobject));
+  configobject.event = 'none';
+  res.json({color : req.body.color});
+})
+
+app.post('/botshape', (req, res) => {
+  configobject = req.body ;
+  configobject.status = 'color';
+configobject.event = 'stagecolor';
   wslink.send(JSON.stringify(configobject));
   configobject.event = 'none';
   res.json({color : req.body.color});
